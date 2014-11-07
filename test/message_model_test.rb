@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class PrivateMessagesTest < ActiveSupport::TestCase
-  
+class MessageModelTest < ActiveSupport::TestCase
+
   def setup
     @jerry = create_user(:email => "jerry")
     @george = create_user(:email => "george")
@@ -22,17 +22,16 @@ class PrivateMessagesTest < ActiveSupport::TestCase
     assert_equal @message, Message.read_message(@message, @george)
   end
 
-
   def test_read_records_timestamp
     assert !@message.nil?
   end
- 
+  
   def test_read?
     Message.read_message(@message, @jerry)
     @message.reload
     assert @message.message_read?
   end
-
+  
   def test_mark_deleted_sender
     @message.mark_deleted(@george)
     @message.reload
@@ -51,7 +50,5 @@ class PrivateMessagesTest < ActiveSupport::TestCase
     @message.mark_deleted(@george)
     assert !Message.exists?(id)
   end
-
-
 
 end
